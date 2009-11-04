@@ -1,9 +1,7 @@
-# $Id: libdca.spec,v 1.2 2009/03/29 13:23:51 thl Exp $
-
 Summary: DTS Coherent Acoustics decoder library
 Name: libdca
 Version: 0.0.5
-Release: 4%{?dist}
+Release: 5%{?dist}
 URL: http://www.videolan.org/developers/libdca.html
 Group: System Environment/Libraries
 Source: http://download.videolan.org/pub/videolan/libdca/0.0.5/%{name}-%{version}.tar.bz2
@@ -55,7 +53,7 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make DESTDIR=$RPM_BUILD_ROOT install
+make DESTDIR=$RPM_BUILD_ROOT install INSTALL="install -p"
 rm $RPM_BUILD_ROOT%{_libdir}/%{name}.la
 
 %clean
@@ -83,6 +81,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}.so
 
 %changelog
+* Sat Oct 17 2009 kwizart < kwizart at gmail.com > - 0.0.5-5
+- Rebuild
+
 * Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 0.0.5-4
 - rebuild for new F11 features
 
