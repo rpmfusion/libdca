@@ -1,7 +1,7 @@
 Summary: DTS Coherent Acoustics decoder library
 Name: libdca
 Version: 0.0.5
-Release: 5%{?dist}
+Release: 5%{?dist}.1
 URL: http://www.videolan.org/developers/libdca.html
 Group: System Environment/Libraries
 Source: http://download.videolan.org/pub/videolan/libdca/0.0.5/%{name}-%{version}.tar.bz2
@@ -81,6 +81,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}.so
 
 %changelog
+* Sat Oct 08 2011 Nicolas Chauvet <kwizart@gmail.com> - 0.0.5-5.1
+- Rebuilt for target i686
+
 * Sat Oct 17 2009 kwizart < kwizart at gmail.com > - 0.0.5-5
 - Rebuild
 
