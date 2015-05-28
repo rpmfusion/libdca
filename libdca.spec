@@ -1,14 +1,13 @@
 Summary: DTS Coherent Acoustics decoder library
 Name: libdca
 Version: 0.0.5
-Release: 8%{?dist}
+Release: 9%{?dist}
 URL: http://www.videolan.org/developers/libdca.html
 Group: System Environment/Libraries
 Source: http://download.videolan.org/pub/videolan/libdca/0.0.5/%{name}-%{version}.tar.bz2
 Patch0: libdca-0.0.5-relsymlinks.patch
 Patch1: libdca-0.0.5-strict-aliasing.patch
 License: GPLv2+
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
 libdca is a free library for decoding DTS Coherent Acoustics streams. It is
@@ -49,38 +48,35 @@ iconv -f ISO8859-1 -t UTF-8 AUTHORS > tmp; mv tmp AUTHORS
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 # Force PIC as applications fail to recompile against the lib on x86_64 without
-%{__make} %{?_smp_mflags} OPT_CFLAGS="$RPM_OPT_FLAGS -fPIC"
+%{__make} %{?_smp_mflags} OPT_CFLAGS="$RPM_OPT_FLAGS -fPIC" LIBS="-lm"
 
 %install
-rm -rf $RPM_BUILD_ROOT
 make DESTDIR=$RPM_BUILD_ROOT install INSTALL="install -p"
 rm $RPM_BUILD_ROOT%{_libdir}/%{name}.la
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
 %files
-%defattr(-,root,root,-)
 %doc AUTHORS COPYING ChangeLog NEWS README
 %{_libdir}/%{name}.so.*
 
 %files tools
-%defattr(-,root,root,-)
 %{_bindir}/*
 %{_mandir}/man1/*
 
 %files devel
-%defattr(-,root,root,-)
 %doc TODO doc/%{name}.txt
 %{_libdir}/pkgconfig/libd??.pc
 %{_includedir}/d??.h
 %{_libdir}/%{name}.so
 
 %changelog
+* Thu May 28 2015 Nicolas Chauvet <kwizart@gmail.com> - 0.0.5-9
+- Fix build with rawhide - rfbz#3674
+- Spec file clean-up
+
 * Sun Aug 31 2014 Sérgio Basto <sergio@serjux.com> - 0.0.5-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
