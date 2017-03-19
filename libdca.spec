@@ -1,7 +1,7 @@
 Summary: DTS Coherent Acoustics decoder library
 Name: libdca
 Version: 0.0.5
-Release: 9%{?dist}
+Release: 10%{?dist}
 URL: http://www.videolan.org/developers/libdca.html
 Group: System Environment/Libraries
 Source: http://download.videolan.org/pub/videolan/libdca/0.0.5/%{name}-%{version}.tar.bz2
@@ -73,6 +73,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/%{name}.la
 %{_libdir}/%{name}.so
 
 %changelog
+* Sun Mar 19 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 0.0.5-10
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Thu May 28 2015 Nicolas Chauvet <kwizart@gmail.com> - 0.0.5-9
 - Fix build with rawhide - rfbz#3674
 - Spec file clean-up
