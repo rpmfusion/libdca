@@ -1,13 +1,10 @@
 Summary: DTS Coherent Acoustics decoder library
 Name: libdca
-Version: 0.0.5
-Release: 12%{?dist}
-URL: http://www.videolan.org/developers/libdca.html
-Group: System Environment/Libraries
-Source: http://download.videolan.org/pub/videolan/libdca/0.0.5/%{name}-%{version}.tar.bz2
-Patch0: libdca-0.0.5-relsymlinks.patch
-Patch1: libdca-0.0.5-strict-aliasing.patch
+Version: 0.0.6
+Release: 1%{?dist}
 License: GPLv2+
+URL: http://www.videolan.org/developers/libdca.html
+Source: http://download.videolan.org/pub/videolan/%{name}/%{version}/%{name}-%{version}.tar.bz2
 
 %description
 libdca is a free library for decoding DTS Coherent Acoustics streams. It is
@@ -17,11 +14,7 @@ radio broadcasting.
 
 %package devel
 Summary: Development files for %{name}
-Group: Development/Libraries
-Obsoletes: libdts-devel < 0.0.2-2
-Provides: libdts-devel = 0.0.2-2
-Requires: %{name} = %{version}-%{release}
-Requires: pkgconfig
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
 Development files for %{name}.
@@ -31,15 +24,13 @@ applications that use %{name}.
 
 %package tools
 Summary: Various tools for use with %{name}
-Group: Applications/Multimedia
 
 %description tools
 Various tools that use %{name}.
 
 %prep
 %setup -q
-%patch0 -p1 -b .relsymlinks
-%patch1 -p1 -b .aliasing
+
 iconv -f ISO8859-1 -t UTF-8 AUTHORS > tmp; mv tmp AUTHORS
 
 %build
@@ -47,19 +38,20 @@ iconv -f ISO8859-1 -t UTF-8 AUTHORS > tmp; mv tmp AUTHORS
 # Get rid of the /usr/lib64 RPATH on 64bit (as of 0.0.5)
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-# Force PIC as applications fail to recompile against the lib on x86_64 without
-%{__make} %{?_smp_mflags} OPT_CFLAGS="$RPM_OPT_FLAGS -fPIC" LIBS="-lm"
+
+%{make_build}
 
 %install
-make DESTDIR=$RPM_BUILD_ROOT install INSTALL="install -p"
-rm $RPM_BUILD_ROOT%{_libdir}/%{name}.la
+%{make_install}
 
-%post -p /sbin/ldconfig
+#Remove libtool archives.
+find $RPM_BUILD_ROOT -name '*.la' -or -name '*.a' | xargs rm -f
 
-%postun -p /sbin/ldconfig
+%ldconfig_scriptlets
 
 %files
-%doc AUTHORS COPYING ChangeLog NEWS README
+%doc AUTHORS ChangeLog NEWS README
+%license COPYING
 %{_libdir}/%{name}.so.*
 
 %files tools
@@ -73,6 +65,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/%{name}.la
 %{_libdir}/%{name}.so
 
 %changelog
+* Tue May 15 2018 Leigh Scott <leigh123linux@googlemail.com> - 0.0.6-1
+- Update to 0.0.6 release
+
 * Thu Mar 01 2018 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 0.0.5-12
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
