@@ -5,6 +5,7 @@ Release: 3%{?dist}
 License: GPLv2+
 URL: http://www.videolan.org/developers/libdca.html
 Source: http://download.videolan.org/pub/videolan/%{name}/%{version}/%{name}-%{version}.tar.bz2
+BuildRequires: gcc
 
 %description
 libdca is a free library for decoding DTS Coherent Acoustics streams. It is
