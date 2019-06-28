@@ -3,7 +3,7 @@ Name: libdca
 Version: 0.0.6
 Release: 3%{?dist}
 License: GPLv2+
-URL: http://www.videolan.org/developers/libdca.html
+URL: https://code.videolan.org/videolan/libdca
 Source: http://download.videolan.org/pub/videolan/%{name}/%{version}/%{name}-%{version}.tar.bz2
 BuildRequires: gcc
 
@@ -40,10 +40,10 @@ iconv -f ISO8859-1 -t UTF-8 AUTHORS > tmp; mv tmp AUTHORS
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
-%{make_build}
+%make_build
 
 %install
-%{make_install}
+%make_install
 
 #Remove libtool archives.
 find $RPM_BUILD_ROOT -name '*.la' -or -name '*.a' | xargs rm -f
