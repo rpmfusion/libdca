@@ -5,6 +5,8 @@ Release: 1%{?dist}
 License: GPLv2+
 URL: https://code.videolan.org/videolan/libdca
 Source: http://download.videolan.org/pub/videolan/%{name}/%{version}/%{name}-%{version}.tar.bz2
+BuildRequires: automake
+BuildRequires: libtool
 BuildRequires: gcc
 
 %description
@@ -30,7 +32,8 @@ Summary: Various tools for use with %{name}
 Various tools that use %{name}.
 
 %prep
-%setup -q
+%autosetup
+autoreconf -fiv
 
 iconv -f ISO8859-1 -t UTF-8 AUTHORS > tmp; mv tmp AUTHORS
 
