@@ -1,7 +1,7 @@
 Summary: DTS Coherent Acoustics decoder library
 Name: libdca
 Version: 0.0.7
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv2+
 URL: https://code.videolan.org/videolan/libdca
 Source: http://download.videolan.org/pub/videolan/%{name}/%{version}/%{name}-%{version}.tar.bz2
@@ -69,6 +69,9 @@ find $RPM_BUILD_ROOT -name '*.la' -or -name '*.a' | xargs rm -f
 %{_libdir}/%{name}.so
 
 %changelog
+* Wed Feb 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 0.0.7-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Tue Aug 18 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 0.0.7-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
